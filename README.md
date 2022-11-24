@@ -35,16 +35,16 @@ return [
 ### LibPgGv\Library\GvEmoney
 
 1. lastError(): ?array
-1. DirectRegister(array $data): ?array
-1. ?UpgradeToVerified
-1. ?DisconnectAccount
-1. InquiryAccount(array $data): ?array
 1. BalanceInquiry(array $data): ?array
-1. ?TransactionHistory
-1. ?PurchaseTransaction
-1. InquiryUsername(array $data): ?array
-1. ?TransferFund
-1. ?CheckStatusTransaction
-1. InquiryQR(array $data): ?array
-1. PaymentQR(array $data): ?array
 1. CheckPaymentQR(array $data): ?array
+1. CheckStatusTransaction(array $data): ?array
+1. DirectRegister(array $data): ?array
+1. DisconnectAccount(array $data): ?array
+1. InquiryAccount(array $data): ?array
+1. InquiryQR(array $data): ?array
+1. InquiryUsername(array $data): ?array
+1. PaymentQR(array $data): ?array
+1. ?PurchaseTransaction
+1. TransactionHistory(array $data): ?array
+1. TransferFund(array $data): ?array
+1. ?UpgradeToVerified

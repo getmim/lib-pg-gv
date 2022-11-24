@@ -14,9 +14,17 @@ class Gv
     protected static $_error;
     protected static $_custom;
 
-    protected static function makeError(string $code = '01', string $message = 'Failed')
-    {
-        self::$_error = ['code' => $code, 'message' => $message];
+    protected static function makeError(
+        string $code = '01',
+        string $message = 'Failed',
+        array $data = []
+    ) {
+        self::$_error = [
+            'code' => $code,
+            'message' => $message,
+            'data' => $data
+        ];
+
         return null;
     }
 
@@ -82,7 +90,7 @@ class Gv
         return md5(implode('', $sign_key));
     }
 
-    public static function call(array $signs, string $uri, array $body): ?array
+    public static function call(array $signs, string $uri, array $body, bool $json = true): ?array
     {
         $config = \Mim::$app->config->libPgGv;
 
@@ -93,12 +101,15 @@ class Gv
             'url' => $config->base . $uri,
             'method' => 'POST',
             'headers' => [
-                'Content-Type' => 'application/json',
                 'Accept' => 'application/json'
             ],
             'body' => $body,
             'agent' => 'Mim/LibPgGv'
         ];
+
+        if ($json) {
+            $opt['headers']['Content-Type'] = 'application/json';
+        }
 
         $res = Curl::fetch($opt);
 
@@ -114,7 +125,7 @@ class Gv
             return self::makeError(
                 $res->respondcode,
                 $res->respondmsg ?? 'Unknow Error Message',
-                $res->responddata ?? []
+                (array)($res->responddata ?? [])
             );
         }
 
