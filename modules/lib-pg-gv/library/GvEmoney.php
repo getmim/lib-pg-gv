@@ -26,6 +26,15 @@ class GvEmoney
         return $res;
     }
 
+    protected static function encodePayload($payload)
+    {
+        if (preg_match('![^A-Za-z0-9+\/=]!', $payload)) {
+            return base64_encode($payload);
+        }
+
+        return $payload;
+    }
+
     protected static function setError($error)
     {
         self::$_error = $error;
@@ -119,7 +128,7 @@ class GvEmoney
 
     public static function InquiryQR(array $data): ?array
     {
-        $data['payload'] = base64_encode($data['payload']);
+        $data['payload'] = self::encodePayload($data['payload']);
 
         $signs = [
             '_custom',
@@ -148,7 +157,7 @@ class GvEmoney
 
     public static function PaymentQR(array $data): ?array
     {
-        $data['payload'] = base64_encode($data['payload']);
+        $data['payload'] = self::encodePayload($data['payload']);
 
         $signs = [
             '_custom',
