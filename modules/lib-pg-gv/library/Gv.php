@@ -104,7 +104,8 @@ class Gv
                 'Accept' => 'application/json'
             ],
             'body' => $body,
-            'agent' => 'Mim/LibPgGv'
+            'agent' => 'Mim/LibPgGv',
+            'timeout' => 30
         ];
 
         if ($json) {
