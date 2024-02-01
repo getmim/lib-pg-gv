@@ -2,7 +2,7 @@
 
 return [
     '__name' => 'lib-pg-gv',
-    '__version' => '0.0.2',
+    '__version' => '0.1.0',
     '__git' => 'git@github.com:getmim/lib-pg-gv.git',
     '__license' => 'MIT',
     '__author' => [

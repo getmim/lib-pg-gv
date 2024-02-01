@@ -105,7 +105,7 @@ class Gv
             ],
             'body' => $body,
             'agent' => 'Mim/LibPgGv',
-            'timeout' => 30
+            'timeout' => 60
         ];
 
         if ($json) {
@@ -115,18 +115,27 @@ class Gv
         $res = Curl::fetch($opt);
 
         if (!is_object($res)) {
-            return self::makeError();
+            return self::makeError('01000', 'Non Object Response', [
+                'body' => $body,
+                'response' => ''
+            ]);
         }
 
         if (!isset($res->respondcode)) {
-            return self::makeError();
+            return self::makeError('01001', 'Invalid Format Response', [
+                'body' => $body,
+                'response' => $res
+            ]);
         }
 
         if ($res->respondcode != '00') {
             return self::makeError(
                 $res->respondcode,
                 $res->respondmsg ?? 'Unknow Error Message',
-                (array)($res->responddata ?? [])
+                [
+                    'body' => $body,
+                    'response' => ($res->responddata ?? [])
+                ]
             );
         }
 
